@@ -25,18 +25,24 @@ def link(update, context):
         update.message.reply_text("Incorrect Link")
 
 def photo(update, context):
-    filename = update.message.message_id
-    file_id = update.message.photo[-1].file_id
-    newFile = context.bot.get_file(file_id)
-    newFile.download(str("image_")+str(filename)+".jpg")
-    update.message.reply_text("Downloaded to the server")
+    try:
+        filename = update.message.message_id
+        file_id = update.message.photo[-1].file_id
+        newFile = context.bot.get_file(file_id)
+        newFile.download(str("image_")+str(filename)+".jpg")
+        update.message.reply_text("Downloaded to the server")
+    except Exception as e:
+        update.message.reply_text("Something went wrong")
 
 def video_hand(update, context):
-    filename = update.message.message_id
-    file_id = update.message.video.file_id
-    newFile = context.bot.get_file(file_id)
-    newFile.download(str("video_")+str(filename)+"."+update.message.video.mime_type[6:9])
-    update.message.reply_text("Downloaded to the server")
+    try:
+        filename = update.message.message_id
+        file_id = update.message.video.file_id
+        newFile = context.bot.get_file(file_id)
+        newFile.download(str("video_")+str(filename)+"."+update.message.video.mime_type[6:9])
+        update.message.reply_text("Downloaded to the server")
+    except Exception as e:
+        update.message.reply_text("Something went wrong")
 
 def main():
     updater = Updater( os.environ.get('TOKEN', ""), use_context=True)
